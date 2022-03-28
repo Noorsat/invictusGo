@@ -1,0 +1,149 @@
+import React from 'react';
+import styled from 'styled-components';
+
+const Gallery = ({photoUrl,tittleText,descriptionText}) => {
+    const fade = (e) => {
+        e.target.classList.add('blur');
+    }
+
+    const remove = (e) =>{
+        e.target.classList.remove('blur');
+    }
+
+    const changeImage = (e) => {
+        const index = e.target.id;
+        const imageUrl = photoUrl[index];
+        document.getElementById('mainImg').src=imageUrl;
+    }
+
+    return (
+        <GallerySection>
+            <Container>
+                <GalleryWrapper>
+                    <GallerySlider>
+                        <GalleryMainImage>
+                            <img src={photoUrl[0]} alt="BigImage" id="mainImg"/>
+                        </GalleryMainImage>
+                        <GalleryImages>
+                            {
+                            photoUrl.map((item,index) => {
+                                return (
+                                    <GalleryImage>
+                                        <img src={item} alt="gallery" onMouseOut={remove} onMouseOver={fade} key={index} id={index} onClick={changeImage}/>
+                                    </GalleryImage>
+                                )
+                            })};
+                        </GalleryImages>
+                    </GallerySlider>
+                    <GalleryContent>
+                        <GalleryTitle>
+                            {tittleText}
+                        </GalleryTitle>
+                        <GalleryText>
+                            {descriptionText}
+                        </GalleryText>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <GalleryText>
+                            Денис Пискунов, управляющий директор клуба "Invictus GO": "Наша цель - благодаря тренировкам повысить работоспособность сотрудников крупных компаний, которые здесь работают"
+                        </GalleryText>
+                    </GalleryContent>
+                </GalleryWrapper>
+            </Container>
+        </GallerySection>
+    );
+}
+
+const GallerySection = styled.section`
+    padding-top:50px;
+    padding-bottom:135px;
+`;
+
+const Container = styled.div`
+    max-width:1280px;
+    margin:0 auto;
+`
+
+const GalleryWrapper = styled.div`
+    display:flex;
+    justify-content:center;
+    @media (max-width:1100px){
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+    }
+`
+
+const GallerySlider = styled.div`
+    margin-right:40px;
+    @media (max-width:1100px){
+        margin-right:0;
+        width:90%;
+        margin:0 auto;
+    }
+`;
+
+const GalleryMainImage = styled.div`
+    margin-bottom:5px;
+    img{
+        max-width:760px;
+        height:570px;
+    }
+    @media (max-width:1100px){
+        img{
+            max-width:100%;
+            height:inherit;
+            margin:0 auto;
+        }
+    }
+`;
+
+const GalleryImages = styled.div`
+    display:flex;   
+    @media (max-width:1100px){
+        max-width:100%;
+    }
+`;
+
+const GalleryImage = styled.div`
+    margin-right:5px;
+    opacity:1;
+    img{
+        width:60px;
+        max-height:40px;
+        transition:all 0.5s;
+        opacity:1;
+    }
+    img.blur{
+        opacity:0.5;
+    }
+    @media (max-width:670px){
+        img{
+            width:100%;
+        }
+    }
+`;
+
+const GalleryContent = styled.div`
+    max-width:360px;
+    @media (max-width:1100px){
+        max-width:70%;
+        margin-top:30px;
+    }
+`;
+
+const GalleryTitle = styled.div`
+    font-weight:600;
+    font-size:24px;
+    line-height: 1.35;
+    margin-bottom:20px; 
+`;
+
+const GalleryText = styled.div`
+    font-size:16px;
+    line-height:1.55;
+    font-weight:300;
+`;
+
+export default Gallery;
